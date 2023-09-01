@@ -1,0 +1,17 @@
+server:
+  port: 8089
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+data:
+  jdbc:
+    repositories:
+      enabled: true
+
+secrets:
+  jwt:
+    key: forecast-app-secret-key
+
