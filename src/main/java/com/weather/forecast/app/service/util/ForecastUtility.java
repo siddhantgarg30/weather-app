@@ -19,18 +19,20 @@ public class ForecastUtility {
     public ForecastResponse getForecastSummary(String locationName) {
         String URL = BASE_URL.concat(locationName).concat("/summary/");
         HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        log.info("[ForecastUtility#getForecastSummary], Calling forecast summary api, URL: {}", URL);
         ForecastResponse response
                 = restTemplate.exchange(URL, HttpMethod.GET, entity, ForecastResponse.class).getBody();
-        log.info("Forecast summary response: {}", response);
+        log.info("[ForecastUtility#getForecastSummary], forecast summary response: {}", response);
         return response;
     }
 
     public ForecastResponse getForecastHourly(String locationName) {
         String URL = BASE_URL.concat(locationName).concat("/hourly/");
         HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        log.info("[ForecastUtility#getForecastHourly], Calling forecast summary api, URL: {}", URL);
         ForecastResponse response
                 = restTemplate.exchange(URL, HttpMethod.GET, entity, ForecastResponse.class).getBody();
-        log.info("Forecast hourly response: {}", response);
+        log.info("[ForecastUtility#getForecastHourly], forecast hourly response: {}", response);
         return response;
     }
 

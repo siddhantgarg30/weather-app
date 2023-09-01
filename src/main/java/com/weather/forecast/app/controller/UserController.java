@@ -5,6 +5,7 @@ import com.weather.forecast.app.entity.TokenResponse;
 import com.weather.forecast.app.service.JwtUserDetailService;
 import com.weather.forecast.app.service.TokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,11 @@ public class UserController {
 
     @PostMapping("/signup")
     public String createUser(@RequestBody UserRequest userRequest) {
-        jwtUserDetailService.createUser(userRequest);
+        try {
+            jwtUserDetailService.createUser(userRequest);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Username already exists");
+        }
         return "Hurray..!!  You have singed up successfully.";
     }
 

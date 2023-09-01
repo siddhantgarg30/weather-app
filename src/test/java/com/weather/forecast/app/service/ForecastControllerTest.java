@@ -77,6 +77,25 @@ public class ForecastControllerTest {
     }
 
     @Test
+    public void successForGetForecastSummaryWithPaginationTest() throws JsonProcessingException {
+        String locationName = "Berlin";
+        template.postForEntity("/user/signup", userRequest, String.class);
+        ResponseEntity<TokenResponse> tokenResponse = template
+                .postForEntity("/user/authenticate", userRequest, TokenResponse.class);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer ".concat(Objects.requireNonNull(tokenResponse.getBody()).getToken()));
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+        ForecastResponse forecastResponse = objectMapper.readValue(FORECAST_SUMMARY_RESPONSE, ForecastResponse.class);
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(HttpEntity.class), eq(ForecastResponse.class)))
+                .thenReturn(new ResponseEntity<>(forecastResponse, HttpStatus.OK));
+        ResponseEntity<ForecastResponse> response = template
+                .exchange("/weather/forecast/summary?locationName=".concat(locationName).concat("&pageNo=1&pageSize=2"),
+                        HttpMethod.GET, httpEntity, ForecastResponse.class);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+    }
+
+    @Test
     public void unauthorizedStatusCodeForGetForecastSummaryTest() throws JsonProcessingException {
         ForecastResponse forecastResponse = objectMapper.readValue(FORECAST_SUMMARY_RESPONSE, ForecastResponse.class);
         when(restTemplate.exchange(any(), any(), any(), eq(ForecastResponse.class)))
@@ -102,6 +121,25 @@ public class ForecastControllerTest {
                 .thenReturn(new ResponseEntity<>(forecastResponse, HttpStatus.OK));
         ResponseEntity<ForecastResponse> response = template
                 .exchange("/weather/forecast/hourly?locationName=".concat(locationName),
+                        HttpMethod.GET, httpEntity, ForecastResponse.class);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+    }
+
+    @Test
+    public void successForGetForecastHourlyWithPaginationTest() throws JsonProcessingException {
+        String locationName = "Berlin";
+        template.postForEntity("/user/signup", userRequest, String.class);
+        ResponseEntity<TokenResponse> tokenResponse = template
+                .postForEntity("/user/authenticate", userRequest, TokenResponse.class);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer ".concat(Objects.requireNonNull(tokenResponse.getBody()).getToken()));
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+        ForecastResponse forecastResponse = objectMapper.readValue(FORECAST_HOURLY_RESPONSE, ForecastResponse.class);
+        when(restTemplate.exchange(anyString(), eq(HttpMethod.GET), any(HttpEntity.class), eq(ForecastResponse.class)))
+                .thenReturn(new ResponseEntity<>(forecastResponse, HttpStatus.OK));
+        ResponseEntity<ForecastResponse> response = template
+                .exchange("/weather/forecast/hourly?locationName=".concat(locationName).concat("&pageNo=1&pageSize=2"),
                         HttpMethod.GET, httpEntity, ForecastResponse.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();

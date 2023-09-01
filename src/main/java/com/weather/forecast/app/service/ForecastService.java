@@ -2,12 +2,14 @@ package com.weather.forecast.app.service;
 
 import com.weather.forecast.app.entity.ForecastResponse;
 import com.weather.forecast.app.service.util.ForecastUtility;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 
 @Service
+@Slf4j
 public class ForecastService {
     @Autowired
     private ForecastUtility forecastUtility;
@@ -34,6 +36,7 @@ public class ForecastService {
         forecastResponse.getForecast().getItems().sort(Comparator.comparing(ForecastResponse.Item::getDate));
         forecastResponse.getForecast().setItems(
                 forecastResponse.getForecast().getItems().subList(startOffset, endOffSet));
+        log.info("[ForecastService#getPaginatedResponse], paginated forecastResponse: {}", forecastResponse);
         return forecastResponse;
     }
 }
