@@ -13,7 +13,7 @@ This is a Java-based Weather App that provides weather forecast information. It 
 1. Clone the repository to your local machine.
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/siddhantgarg30/weather-forecast-app.git
 ```
 
 2. Install project dependencies using Maven.
