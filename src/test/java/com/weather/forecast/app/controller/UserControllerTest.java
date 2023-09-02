@@ -1,4 +1,4 @@
-package com.weather.forecast.app.service;
+package com.weather.forecast.app.controller;
 
 import com.weather.forecast.app.entity.TokenResponse;
 import com.weather.forecast.app.entity.UserRequest;

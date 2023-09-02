@@ -1,4 +1,4 @@
-package com.weather.forecast.app.service;
+package com.weather.forecast.app.controller;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

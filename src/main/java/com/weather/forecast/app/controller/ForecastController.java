@@ -15,6 +15,9 @@ public class ForecastController {
     @Autowired
     private ForecastService forecastService;
 
+    /***
+     * @apiNote This api is for getting daily forecast summary.
+     */
     @GetMapping("/forecast/summary")
     public ForecastResponse getForecastSummary(@RequestParam String locationName,
                                                @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -30,6 +33,9 @@ public class ForecastController {
         }
     }
 
+    /***
+     * @apiNote This api is for getting hourly forecast summary.
+     */
     @GetMapping("/forecast/hourly")
     public ForecastResponse getForecastHourly(@RequestParam String locationName,
                                               @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,

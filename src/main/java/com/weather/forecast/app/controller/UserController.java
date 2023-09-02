@@ -23,6 +23,9 @@ public class UserController {
     @Autowired
     private TokenManager tokenManager;
 
+    /***
+     * @apiNote This endpoint is for creating new user.
+     */
     @PostMapping("/signup")
     public String createUser(@RequestBody UserRequest userRequest) {
         try {
@@ -33,6 +36,9 @@ public class UserController {
         return "Hurray..!!  You have singed up successfully.";
     }
 
+    /***
+     * @apiNote This api is for generating Jwt token for valid user.
+     */
     @PostMapping("/authenticate")
     public TokenResponse getSecurityToken(@RequestBody UserRequest userRequest) throws Exception {
         authenticationManager.authenticate(
