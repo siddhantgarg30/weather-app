@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequestMapping("/weather")
@@ -22,6 +23,8 @@ public class ForecastController {
                 "pageNo: {}, pageSize: {}", locationName, pageNo, pageSize);
         try {
             return forecastService.getForecastSummary(locationName, pageNo, pageSize);
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new Exception("Location name is incorrect");
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -35,6 +38,8 @@ public class ForecastController {
                 "pageNo: {}, pageSize: {}", locationName, pageNo, pageSize);
         try {
             return forecastService.getForecastHourly(locationName, pageNo, pageSize);
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new Exception("Location name is incorrect");
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
